@@ -1,0 +1,41 @@
+name: Install latest Diffenator3
+description: "Install the latest version of Diffenator3"
+inputs:
+  release:
+    description: "Release version"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Download
+      uses: robinraju/release-downloader@1
+      with:
+        repository: 'googlefonts/diffenator3'
+        latest: ${{ !contains(inputs.release, ".") }}
+        releaseId: ${{ inputs.release }}
+    - if: runner.os == 'Windows'
+      shell: bash
+      name: Install
+      run: |
+        7z e diffenator3*.zip
+        mkdir "C:/Program Files/Diffenator3"
+        cp diffenator3.exe "C:/Program Files/Diffenator3"
+        cp diff3proof.exe "C:/Program Files/Diffenator3"
+        echo "C:/Program Files/Diffenator3" >> $GITHUB_PATH
+    - if: runner.os == "Linux"
+      shell: bash
+      name: Install
+      run: |
+        tar zxvf diffenator3*linux*.tar.gz
+        cp diffenator3*linux*/diffenator3 /usr/local/bin
+        cp diffenator3*linux*/diff3proof /usr/local/bin
+    - if: runner.os == "Darwin"
+      shell: bash
+      name: Install
+      run: |
+        tar zxvf diffenator3*x86_64-apple-darwin.tar.gz
+        cp diffenator3*apple-darwin/diffenator3 /usr/local/bin
+        cp diffenator3*apple-darwin/diff3proof /usr/local/bin
+    - name: Test
+      run: diffenator3 --version
+      shell: bash
