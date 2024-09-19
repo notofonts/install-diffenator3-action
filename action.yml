@@ -8,7 +8,7 @@ runs:
   using: "composite"
   steps:
     - name: Download
-      uses: robinraju/release-downloader@1
+      uses: robinraju/release-downloader@v1
       with:
         repository: 'googlefonts/diffenator3'
         latest: ${{ !contains(inputs.release, '.') }}
