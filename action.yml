@@ -11,7 +11,7 @@ runs:
       uses: robinraju/release-downloader@1
       with:
         repository: 'googlefonts/diffenator3'
-        latest: ${{ !contains(inputs.release, ".") }}
+        latest: ${{ !contains(inputs.release, '.') }}
         releaseId: ${{ inputs.release }}
     - if: runner.os == 'Windows'
       shell: bash
@@ -22,14 +22,14 @@ runs:
         cp diffenator3.exe "C:/Program Files/Diffenator3"
         cp diff3proof.exe "C:/Program Files/Diffenator3"
         echo "C:/Program Files/Diffenator3" >> $GITHUB_PATH
-    - if: runner.os == "Linux"
+    - if: runner.os == 'Linux'
       shell: bash
       name: Install
       run: |
         tar zxvf diffenator3*linux*.tar.gz
         cp diffenator3*linux*/diffenator3 /usr/local/bin
         cp diffenator3*linux*/diff3proof /usr/local/bin
-    - if: runner.os == "Darwin"
+    - if: runner.os == 'Darwin'
       shell: bash
       name: Install
       run: |
