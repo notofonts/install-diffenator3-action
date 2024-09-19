@@ -13,6 +13,9 @@ runs:
         repository: 'googlefonts/diffenator3'
         latest: ${{ !contains(inputs.release, '.') }}
         releaseId: ${{ inputs.release }}
+    - shell: bash
+      name: Debug
+      run: find .
     - if: runner.os == 'Windows'
       shell: bash
       name: Install
