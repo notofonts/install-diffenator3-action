@@ -16,9 +16,6 @@ runs:
         fileName: "*"
         tarBall: false
         zipBall: false
-    - shell: bash
-      name: Debug
-      run: find .
     - if: runner.os == 'Windows'
       shell: bash
       name: Install
@@ -34,14 +31,14 @@ runs:
       run: |
         tar zxvf diffenator3*linux*.tar.gz
         cp diffenator3*linux*/diffenator3 /usr/local/bin
-        cp diffenator3*linux*/diff3proof /usr/local/bin
+        #cp diffenator3*linux*/diff3proof /usr/local/bin
     - if: runner.os == 'Darwin'
       shell: bash
       name: Install
       run: |
         tar zxvf diffenator3*x86_64-apple-darwin.tar.gz
         cp diffenator3*apple-darwin/diffenator3 /usr/local/bin
-        cp diffenator3*apple-darwin/diff3proof /usr/local/bin
+        #cp diffenator3*apple-darwin/diff3proof /usr/local/bin
     - name: Test
       run: diffenator3 --version
       shell: bash
