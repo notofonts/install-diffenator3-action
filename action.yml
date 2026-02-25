@@ -4,6 +4,10 @@ inputs:
   release:
     description: "Release version"
     required: false
+  diff3proof:
+    description: "Whether to install diff3proof as well"
+    required: false
+    default: "false"
 runs:
   using: "composite"
   steps:
@@ -23,7 +27,9 @@ runs:
         7z e diffenator3*.zip
         mkdir "C:/Program Files/Diffenator3"
         cp diffenator3.exe "C:/Program Files/Diffenator3"
-        cp diff3proof.exe "C:/Program Files/Diffenator3"
+        if [ "${{ inputs.diff3proof }}" = "true" ]; then
+          cp diff3proof.exe "C:/Program Files/Diffenator3"
+        fi
         echo "C:/Program Files/Diffenator3" >> $GITHUB_PATH
     - if: runner.os == 'Linux'
       shell: bash
@@ -31,14 +37,18 @@ runs:
       run: |
         tar zxvf diffenator3*linux*.tar.gz
         cp diffenator3*linux*/diffenator3 /usr/local/bin
-        #cp diffenator3*linux*/diff3proof /usr/local/bin
+        if [ "${{ inputs.diff3proof }}" = "true" ]; then
+          cp diffenator3*linux*/diff3proof /usr/local/bin
+        fi
     - if: runner.os == 'Darwin'
       shell: bash
       name: Install
       run: |
         tar zxvf diffenator3*x86_64-apple-darwin.tar.gz
         cp diffenator3*apple-darwin/diffenator3 /usr/local/bin
-        #cp diffenator3*apple-darwin/diff3proof /usr/local/bin
+        if [ "${{ inputs.diff3proof }}" = "true" ]; then
+          cp diffenator3*apple-darwin/diff3proof /usr/local/bin
+        fi
     - name: Test
       run: diffenator3 --version
       shell: bash
